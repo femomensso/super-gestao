@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FornecedorController;
 use App\Http\Middleware\LogAcessoMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +26,16 @@ Route::middleware('autenticacao')->prefix('/app')->group(function() {
     Route::get('/home', 'HomeController@index')->name('app.home');
     Route::get('/sair', 'LoginController@sair')->name('app.sair');
     Route::get('/cliente', 'ClienteController@index')->name('app.cliente');
+
     Route::get('/fornecedor', 'FornecedorController@index')->name('app.fornecedor');
-    Route::get('/produto', 'ProdutoController@index')->name('app.produto');
+    Route::get('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
+    Route::post('/fornecedor/adicionar', 'FornecedorController@adicionar')->name('app.fornecedor.adicionar');
+    Route::post('/fornecedor/listar', 'FornecedorController@listar')->name('app.fornecedor.listar');
+    Route::get('/fornecedor/listar', 'FornecedorController@listar')->name('app.fornecedor.listar');
+    Route::get('/fornecedor/editar/{id}/{msg?}', 'FornecedorController@editar')->name('app.fornecedor.editar');
+    Route::get('/fornecedor/excluir/{id}', 'FornecedorController@excluir')->name('app.fornecedor.excluir');
+
+    Route::resource('produto', 'ProdutoController');
 });
 
 Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('teste');
