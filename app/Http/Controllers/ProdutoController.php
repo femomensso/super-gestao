@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Produto;
+use App\Models\Unidade;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -12,9 +13,11 @@ class ProdutoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $produtos = Produto::paginate(10);
+
+        return view('app.produto.index', ['produtos' => $produtos, 'request' => $request->all()]);
     }
 
     /**
@@ -24,7 +27,8 @@ class ProdutoController extends Controller
      */
     public function create()
     {
-        //
+        $unidades = Unidade::all();
+        return view('app.produto.create', ['unidades' => $unidades]);
     }
 
     /**
@@ -35,7 +39,21 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $regras = [
+            'nome' => 'required',
+            'descricao' => 'required',
+            'peso' => 'required',
+            'unidade_id' => 'exists:unidades,id'
+        ];
+
+        $feedback = [
+            'required' => 'Esse campo deve ser preenchido.',
+            'unidade_id.exists' => 'Essa unidade não existe no nosso banco de dados.'
+        ];
+
+        $request->validate($regras, $feedback);
+        Produto::create($request->all());
+        return redirect()->route('produto.index');
     }
 
     /**
