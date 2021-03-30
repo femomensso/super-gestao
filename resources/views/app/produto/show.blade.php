@@ -14,7 +14,7 @@
     </div>
     <div class="informacao-pagina" style="width:30%; margin-left:auto; margin-right:auto;">
     {{ $msg ?? '' }}
-        <table border="1" style="text-aling:left">
+        <table border="1" style="text-align:left">
             <tr>
                 <td>ID</td>
                 <td>{{$produto->id}}</td>

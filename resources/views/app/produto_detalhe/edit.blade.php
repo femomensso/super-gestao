@@ -14,6 +14,9 @@
     </div>
     <div class="informacao-pagina" style="width:30%; margin-left:auto; margin-right:auto;">
     {{ $msg ?? '' }}
+        <h4>Produto</h4>
+        <div>Nome: {{ $produto_detalhe->produto->nome }}</div><br>
+        <div>Descriçao: {{ $produto_detalhe->produto->descricao }}</div><br>
         <form method="post" action="{{ route('produto-detalhe.update', ['produto_detalhe' => $produto_detalhe->id]) }}">
             @csrf
             @method('PUT')
